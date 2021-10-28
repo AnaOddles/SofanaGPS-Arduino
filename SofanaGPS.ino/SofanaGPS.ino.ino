@@ -2,9 +2,9 @@
 #include <WifiLocation.h>
 //Import the wifi library
 
-const char* googleApiKey = "APIKEY";
-const char* ssid = "SSID";
-const char* passwd = "Password";
+const char* googleApiKey = "API_KEY";
+const char* ssid = "WIFI_NAME";
+const char* passwd = "WIFI_PASSWORD";
 WifiLocation location(googleApiKey);
 
 // Set time via NTP, as required for x.509 validation

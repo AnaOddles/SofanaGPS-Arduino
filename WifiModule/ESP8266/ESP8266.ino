@@ -12,8 +12,8 @@ String lat;
 String lon;
 
 //Network Credentials
-const char* ssid = "Peterson house 2.0";
-const char* passwd = "17251234";
+const char* ssid = "ssid";
+const char* passwd = "psswrd";
 
 //The serial connection to the espmodule wifi board
 //D6 = Rx & D5 = Tx

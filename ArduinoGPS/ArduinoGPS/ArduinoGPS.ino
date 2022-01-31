@@ -62,19 +62,24 @@ void sendData()
   //Grab long and lat coordinates
   grabCoordinates();
 
-  //Assign data to JSON objet
-  data["lat"] = latitude;
-  data["lon"] = longitude;
-
-  //Send data to wifi module
-  data.printTo(espSerial);
-
-  //Clear the buffer for next coorindates
-  jsonBuffer.clear();
-
-  //Wait 10 seconds
-  delay(10000);
-  Serial.println();
+  if(!latitude.equals("") && !longitude.equals(""))
+  {
+    //Assign data to JSON objet
+    data["lat"] = latitude;
+    data["lon"] = longitude;
+  
+    //Send data to wifi module
+    data.printTo(espSerial);
+  
+    //Clear the buffer for next coorindates
+    jsonBuffer.clear();
+  
+    //Wait 10 seconds
+    delay(10000);
+    Serial.println();
+  }
+  else  
+    Serial.println(F("Waiting for GPS to grab coordinates...\n"));
 }
 
 //Function that used to grab coorindates from the GPS Module
@@ -87,7 +92,7 @@ void grabCoordinates() {
     Serial.print(gps.location.lat(), 6);
     Serial.print(F(","));
     Serial.print(gps.location.lng(), 6);
-
+    
     //Grab the coords
     longitude = String(gps.location.lng(), 6);
     latitude = String(gps.location.lat(), 6);

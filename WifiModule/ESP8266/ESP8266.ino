@@ -98,8 +98,8 @@ void connectToWifi() {
 
   //Display connection information for debugging
   Serial.println();
-  Serial.print("Connected, IP address: ");
-  Serial.println(WiFi.localIP());
+  Serial.print("Connected to WIFI:");
+  //Serial.println(WiFi.);
 }
 
 //Function to display the GPS coordinates for debugging purposes

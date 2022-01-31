@@ -8,8 +8,8 @@
 //Global Variables
 
 //Store the lat and lon coorindates
-String lat;
-String lon;
+String latitude;
+String longitude;
 String dateTime;
 
 //Network Credentials
@@ -64,8 +64,8 @@ void loop() {
     }
 
     //Extract the coorindates from Json Object
-    lat = String(data["lat"]);
-    lon = String(data["lon"]);
+    latitude = String(data["lat"]);
+    longitude = String(data["lon"]);
     dateTime = String(data["dateTime"]);
     
     //Display coodinates for debugging
@@ -109,9 +109,9 @@ void displayCoorindates(JsonObject& data) {
   //Sucessfully parsed Json Object
   Serial.println("Json Object Recieved\n");
   Serial.print("Recieved Latitude: ");
-  Serial.println(lat);
+  Serial.println(latitude);
   Serial.print("Recieved Longitude:  ");
-  Serial.println(lon);
+  Serial.println(longitude);
   Serial.print("Recieved DateTime: ");
   Serial.println(dateTime);
 }

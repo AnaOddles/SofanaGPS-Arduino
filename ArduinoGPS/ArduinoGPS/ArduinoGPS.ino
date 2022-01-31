@@ -66,7 +66,8 @@ void sendData()
   //Grab the date time
   grabDateTime();
 
-  if (!latitude.equals("") && !longitude.equals(""))
+  if (!latitude.equals("") && !longitude.equals("") 
+        && latitude != NULL && !longitude != NULL)
   {
     //Assign data to JSON objet
     data["lat"] = latitude;
@@ -77,14 +78,14 @@ void sendData()
 
     //Clear the buffer for next coorindates
     jsonBuffer.clear();
-
-    //Wait 10 seconds
-    delay(10000);
+    
     Serial.println();
 
   }
   else
     Serial.println(F("Waiting for GPS to grab coordinates...\n"));
+  //Wait 10 seconds
+  delay(10000);
 }
 
 //Function that used to grab coorindates from the GPS Module

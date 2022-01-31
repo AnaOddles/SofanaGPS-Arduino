@@ -11,6 +11,7 @@ static const uint32_t GPSBaud = 9600;
 //Storing the gps coordinates
 String longitude;
 String latitude;
+String dateTime;
 
 // The TinyGPS++ object
 TinyGPSPlus gps;
@@ -62,23 +63,27 @@ void sendData()
   //Grab long and lat coordinates
   grabCoordinates();
 
-  if(!latitude.equals("") && !longitude.equals(""))
+  //Grab the date time
+  grabDateTime();
+
+  if (!latitude.equals("") && !longitude.equals(""))
   {
     //Assign data to JSON objet
     data["lat"] = latitude;
     data["lon"] = longitude;
-  
+    data["dateTime"] = dateTime;
     //Send data to wifi module
     data.printTo(espSerial);
-  
+
     //Clear the buffer for next coorindates
     jsonBuffer.clear();
-  
+
     //Wait 10 seconds
     delay(10000);
     Serial.println();
+
   }
-  else  
+  else
     Serial.println(F("Waiting for GPS to grab coordinates...\n"));
 }
 
@@ -87,19 +92,55 @@ void grabCoordinates() {
   //If a valid gps location is grabbed
   if (gps.location.isValid())
   {
-
     //Print to the Arduino Serial Monitor for debugging
     Serial.print(gps.location.lat(), 6);
     Serial.print(F(","));
     Serial.print(gps.location.lng(), 6);
-    
+    Serial.print("\n");
     //Grab the coords
     longitude = String(gps.location.lng(), 6);
     latitude = String(gps.location.lat(), 6);
-
   }
   else
   {
-    Serial.print(F("INVALID"));
+    Serial.print(F("INVALID COORDINATES\n"));
+  }
+}
+
+//Function that used to grab date time from the GPS Module
+void grabDateTime() {
+  dateTime = "";
+  if (gps.date.isValid())
+  {
+    if (gps.date.month() < 10) dateTime.concat(String("0"));
+    dateTime.concat(String(gps.date.month()));
+    dateTime.concat(String("/"));
+    if (gps.date.day() < 10) dateTime.concat(String("0"));
+    dateTime.concat(String(gps.date.day()));
+    dateTime.concat("/");
+    dateTime.concat(String(gps.date.year()));
+    dateTime.concat(" ");
+
+    if (gps.time.isValid())
+    {
+      if (gps.time.hour() < 10) dateTime.concat(String("0"));
+      dateTime.concat(String(gps.time.hour()));
+      dateTime.concat(String(":"));
+      if (gps.time.minute() < 10) dateTime.concat(String("0"));
+      dateTime.concat(String(gps.time.minute()));
+      dateTime.concat(String(":"));
+      if (gps.time.second() < 10) dateTime.concat(String("0"));
+      dateTime.concat(String(gps.time.second()));
+    }
+    else
+    {
+      dateTime.concat(String("INVALID TIME\n"));
+    }
+    Serial.print(dateTime);
+    Serial.print("\n");
+  }
+  else
+  {
+    Serial.print(F("INVALID DATETIME\n"));
   }
 }

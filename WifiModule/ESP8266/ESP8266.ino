@@ -10,6 +10,7 @@
 //Store the lat and lon coorindates
 String lat;
 String lon;
+String dateTime;
 
 //Network Credentials
 const char* ssid = "ssid";
@@ -65,7 +66,8 @@ void loop() {
     //Extract the coorindates from Json Object
     lat = String(data["lat"]);
     lon = String(data["lon"]);
-
+    dateTime = String(data["dateTime"]);
+    
     //Display coodinates for debugging
     displayCoorindates(data);
 
@@ -110,6 +112,8 @@ void displayCoorindates(JsonObject& data) {
   Serial.println(lat);
   Serial.print("Recieved Longitude:  ");
   Serial.println(lon);
+  Serial.print("Recieved DateTime: ");
+  Serial.println(dateTime);
 }
 
 //Function to send HTTP Post to SofanaGPSAPI

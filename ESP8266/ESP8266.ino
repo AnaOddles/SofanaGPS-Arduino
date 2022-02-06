@@ -4,7 +4,9 @@
 #include <ArduinoJson.h>
 #include <ESP8266HTTPClient.h>
 #include <WiFiClientSecureBearSSL.h>
-#include "arduino_secrets.h" 
+#include "arduino_secrets.h"
+#include <base64.h> 
+
 
 
 //Global Variables
@@ -15,8 +17,8 @@ String longitude;
 String dateTime;
 
 //Network Credentials
-const char* ssid = "ssid";
-const char* passwd = "psswrd";
+const char* ssid = SECRET_SSID;
+const char* passwd = SECRET_PASS;
 
 //The serial connection to the espmodule wifi board
 //D6 = Rx & D5 = Tx
@@ -123,7 +125,7 @@ void sendHTTPPOST(JsonObject& data) {
 
   //Declare String var for SofanaGPSAPI
   String sofanaGPSAPI_URL = "https://sofanagpsapi.azurewebsites.net/api/locations";
-  Serial.println("TESTING POST\n");
+  Serial.println("SENDING POST\n");
 
   //Make sure Wifi Module is connected to Wifi
   if (WiFiMulti.run() == WL_CONNECTED) {
@@ -140,7 +142,8 @@ void sendHTTPPOST(JsonObject& data) {
 
       //Add HTTP Request Headers
       https.addHeader("Content-Type", "application/json");
-      //http.addHeader("auth-key", "My_authenication_key");
+      String auth = base64::encode(String(AUTH_HEADER));
+      https.addHeader("Authorization", "Basic " + auth);
 
       String jsonString;
       data.printTo(jsonString);

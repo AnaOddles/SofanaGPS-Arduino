@@ -67,7 +67,7 @@ void sendData()
   grabDateTime();
 
   if (!latitude.equals("") && !longitude.equals("") 
-        && latitude != NULL && !longitude != NULL)
+        && latitude != NULL && longitude != NULL)
   {
     //Assign data to JSON objet
     data["lat"] = latitude;

@@ -7,6 +7,7 @@
 //Serial Pins for GPS Module
 static const int RXPin = 4, TXPin = 3;
 static const uint32_t GPSBaud = 9600;
+static const int cartId = 1;
 
 //Storing the gps coordinates
 String longitude;
@@ -73,6 +74,7 @@ void sendData()
     data["lat"] = latitude;
     data["lon"] = longitude;
     data["dateTime"] = dateTime;
+    data["cartId"] = cartId;
     //Send data to wifi module
     data.printTo(espSerial);
 

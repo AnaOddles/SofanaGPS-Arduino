@@ -15,6 +15,7 @@
 String latitude;
 String longitude;
 String dateTime;
+int cartId;
 
 //Network Credentials
 const char* ssid = SECRET_SSID;
@@ -71,6 +72,7 @@ void loop() {
     latitude = String(data["lat"]);
     longitude = String(data["lon"]);
     dateTime = String(data["dateTime"]);
+    cartId = int(data["cartId"]);
     
     //Display coodinates for debugging
     displayCoorindates(data);
@@ -118,6 +120,8 @@ void displayCoorindates(JsonObject& data) {
   Serial.println(longitude);
   Serial.print("Recieved DateTime: ");
   Serial.println(dateTime);
+  Serial.println("Recieved Cart ID: ");
+  Serial.print(cartId);
 }
 
 //Function to send HTTP Post to SofanaGPSAPI

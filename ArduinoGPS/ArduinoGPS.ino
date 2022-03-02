@@ -7,7 +7,7 @@
 //Serial Pins for GPS Module
 static const int RXPin = 4, TXPin = 3;
 static const uint32_t GPSBaud = 9600;
-static const int cartId = 1;
+static const int cartId = 2;
 
 //Storing the gps coordinates
 String longitude;
@@ -41,34 +41,35 @@ void setup()
 void loop()
 {
   // This sketch displays information every time a new sentence is correctly encoded.
-  while (ss.available() > 0)
+  while (ss.available() > 0){
     if (gps.encode(ss.read()))
       //Call function to send data to Wifi Module
       sendData();
-
+      
   //If we are not receiving any encoding from GPS Module
   if (millis() > 5000 && gps.charsProcessed() < 10)
   {
     Serial.println(F("No GPS detected: check wiring."));
     while (true);
   }
+  }
 }
-
+    
 //Function to send data to Wifi Module
 void sendData()
 {
   //Setup json buffer that will store GPS coordinates as JSON
-  StaticJsonBuffer<1000> jsonBuffer;
+  StaticJsonBuffer<100> jsonBuffer;
   JsonObject& data = jsonBuffer.createObject();
-
+  
   //Grab long and lat coordinates
   grabCoordinates();
-
+  
   //Grab the date time
   grabDateTime();
-
-  if (!latitude.equals("") && !longitude.equals("") 
-        && latitude != NULL && longitude != NULL)
+  
+  if (!longitude.equals("") && !latitude.equals("") 
+        && longitude != NULL && latitude != NULL)
   {
     //Assign data to JSON objet
     data["lat"] = latitude;
@@ -78,21 +79,24 @@ void sendData()
     //Send data to wifi module
     data.printTo(espSerial);
 
-    //Clear the buffer for next coorindates
+    //Clear the buffer for next coordindates
     jsonBuffer.clear();
     
     Serial.println();
 
   }
-  else
-    Serial.println(F("Waiting for GPS to grab coordinates...\n"));
-  //Wait 10 seconds
-  delay(10000);
+  //else
+    //Serial.println(F("Waiting for GPS to grab coordinates...\n"));
+  //Wait 5 seconds
+  delay(5000);
+
 }
 
 //Function that used to grab coorindates from the GPS Module
 void grabCoordinates() {
-  //If a valid gps location is grabbed
+  longitude = "";
+  latitude = "";
+  //If a valid gps location is grabbeds
   if (gps.location.isValid())
   {
     //Print to the Arduino Serial Monitor for debugging
@@ -103,6 +107,15 @@ void grabCoordinates() {
     //Grab the coords
     longitude = String(gps.location.lng(), 6);
     latitude = String(gps.location.lat(), 6);
+    
+    //data["lat"] = String(gps.location.lat(), 6);
+    //data["lon"] = String(gps.location.lng(), 6);
+ 
+    //Serial.print((longitude));
+    //Serial.print("-");
+    //Serial.print((latitude));    
+    //Serial.print("\n");
+    //Serial.println(gps.speed.kmph());
   }
   else
   {
@@ -139,6 +152,7 @@ void grabDateTime() {
     {
       dateTime.concat(String("INVALID TIME\n"));
     }
+    //data["dateTime"] = String(dateTime);
     Serial.print(dateTime);
     Serial.print("\n");
   }

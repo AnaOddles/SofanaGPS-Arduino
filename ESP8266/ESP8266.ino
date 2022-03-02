@@ -7,8 +7,6 @@
 #include "arduino_secrets.h"
 #include <base64.h> 
 
-
-
 //Global Variables
 
 //Store the lat and lon coorindates
@@ -43,7 +41,7 @@ void setup() {
   for (uint8_t t = 4; t > 0; t--) {
     Serial.printf("[SETUP] WAIT %d...\n", t);
     Serial.flush();
-    delay(1000);
+    //delay(1000);
   }
   //Call function to connect to Wifi
   connectToWifi();
@@ -77,16 +75,22 @@ void loop() {
     //Display coodinates for debugging
     displayCoorindates(data);
 
+if (!longitude.equals("") && !latitude.equals("") 
+        && longitude != NULL && latitude != NULL)
+  {
     //Sent HTTP POST
     sendHTTPPOST(data);
     Serial.println("______________________________________");
+  }
+  else
+    Serial.println("Invalid coordinates");
 
   }
   else {
-    Serial.println("Waiting for communication from GPS\n");
+    //Serial.println("Waiting for communication from GPS\n");
     return;
   }
-  delay(10000);
+  //delay(1000);
 }
 
 //Function to connect system to Wifi network
@@ -120,8 +124,8 @@ void displayCoorindates(JsonObject& data) {
   Serial.println(longitude);
   Serial.print("Recieved DateTime: ");
   Serial.println(dateTime);
-  Serial.println("Recieved Cart ID: ");
-  Serial.print(cartId);
+  Serial.print("Recieved Cart ID: ");
+  Serial.println(cartId);
 }
 
 //Function to send HTTP Post to SofanaGPSAPI

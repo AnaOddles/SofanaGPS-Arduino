@@ -27,7 +27,7 @@ SoftwareSerial espSerial(5, 6);
 void setup()
 {
   //Start the Serial Monitor for debugging
-  Serial.begin(115200);
+  Serial.begin(GPSBaud);
   //Start the Serial connection for Wifi module
   espSerial.begin(9600);
   //Start the Serial connection for GPS module
@@ -59,7 +59,7 @@ void loop()
 void sendData()
 {
   //Setup json buffer that will store GPS coordinates as JSON
-  StaticJsonBuffer<100> jsonBuffer;
+  StaticJsonBuffer<1000> jsonBuffer;
   JsonObject& data = jsonBuffer.createObject();
   
   //Grab long and lat coordinates
@@ -88,7 +88,7 @@ void sendData()
   //else
     //Serial.println(F("Waiting for GPS to grab coordinates...\n"));
   //Wait 5 seconds
-  delay(5000);
+  //delay(5000);
 
 }
 
@@ -104,18 +104,10 @@ void grabCoordinates() {
     Serial.print(F(","));
     Serial.print(gps.location.lng(), 6);
     Serial.print("\n");
+    
     //Grab the coords
     longitude = String(gps.location.lng(), 6);
     latitude = String(gps.location.lat(), 6);
-    
-    //data["lat"] = String(gps.location.lat(), 6);
-    //data["lon"] = String(gps.location.lng(), 6);
- 
-    //Serial.print((longitude));
-    //Serial.print("-");
-    //Serial.print((latitude));    
-    //Serial.print("\n");
-    //Serial.println(gps.speed.kmph());
   }
   else
   {

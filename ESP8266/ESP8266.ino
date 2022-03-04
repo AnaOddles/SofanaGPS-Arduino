@@ -32,7 +32,7 @@ ESP8266WiFiMulti WiFiMulti;
 //Function for configuring ESP8266 upon bootup
 void setup() {
   //Open serial communication and wait for port to open:
-  Serial.begin(9600);
+  Serial.begin(115200);
   nodemcu.begin(9600);
 
   while (!Serial) continue;
@@ -41,7 +41,7 @@ void setup() {
   for (uint8_t t = 4; t > 0; t--) {
     Serial.printf("[SETUP] WAIT %d...\n", t);
     Serial.flush();
-    //delay(1000);
+    delay(1000);
   }
   //Call function to connect to Wifi
   connectToWifi();
@@ -87,10 +87,10 @@ if (!longitude.equals("") && !latitude.equals("")
 
   }
   else {
-    //Serial.println("Waiting for communication from GPS\n");
+    Serial.println("Waiting for communication from GPS\n");
     return;
   }
-  //delay(1000);
+  delay(1000);
 }
 
 //Function to connect system to Wifi network

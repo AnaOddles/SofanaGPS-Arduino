@@ -33,7 +33,7 @@ void setup()
   //Start the Serial connection for GPS module
   ss.begin(GPSBaud);
 
-  delay(1000);
+  delay(5000);
   Serial.println("Program Started...\n");
 }
 

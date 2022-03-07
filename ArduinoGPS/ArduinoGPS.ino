@@ -27,7 +27,7 @@ SoftwareSerial espSerial(5, 6);
 void setup()
 {
   //Start the Serial Monitor for debugging
-  Serial.begin(GPSBaud);
+  Serial.begin(115200);
   //Start the Serial connection for Wifi module
   espSerial.begin(9600);
   //Start the Serial connection for GPS module
@@ -88,7 +88,7 @@ void sendData()
   //else
     //Serial.println(F("Waiting for GPS to grab coordinates...\n"));
   //Wait 5 seconds
-  //delay(5000);
+  //delay(1000);
 
 }
 

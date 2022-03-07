@@ -90,7 +90,7 @@ if (!longitude.equals("") && !latitude.equals("")
     Serial.println("Waiting for communication from GPS\n");
     return;
   }
-  delay(1000);
+  delay(500);
 }
 
 //Function to connect system to Wifi network

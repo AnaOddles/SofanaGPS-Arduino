@@ -7,7 +7,7 @@
 //Serial Pins for GPS Module
 static const int RXPin = 4, TXPin = 3;
 static const uint32_t GPSBaud = 9600;
-static const int cartId = 2;
+static const int cartId = 0;
 
 //Storing the gps coordinates
 String longitude;
@@ -50,7 +50,7 @@ void loop()
   if (millis() > 5000 && gps.charsProcessed() < 10)
   {
     Serial.println(F("No GPS detected: check wiring."));
-    while (true);
+    //while (true);
   }
   }
 }
@@ -87,8 +87,13 @@ void sendData()
   }
   //else
     //Serial.println(F("Waiting for GPS to grab coordinates...\n"));
+<<<<<<< HEAD
+  //Wait 5ms seconds
+  delay(500);
+=======
   //Wait 5 seconds
   //delay(1000);
+>>>>>>> 00ee21aa05597a9aed09c23e72b783366366342a
 
 }
 

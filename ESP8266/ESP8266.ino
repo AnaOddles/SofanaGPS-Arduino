@@ -5,7 +5,7 @@
 #include <ESP8266HTTPClient.h>
 #include <WiFiClientSecureBearSSL.h>
 #include "arduino_secrets.h"
-#include <base64.h> 
+#include <base64.h>
 
 //Global Variables
 
@@ -47,6 +47,8 @@ void setup() {
   connectToWifi();
 }
 
+<<<<<<< HEAD
+=======
 //Function that runs when ESP8266 is running - loops
 void loop() {
   //If Serial Communication from Arduino is successful
@@ -92,6 +94,7 @@ if (!longitude.equals("") && !latitude.equals("")
   }
   delay(500);
 }
+>>>>>>> 00ee21aa05597a9aed09c23e72b783366366342a
 
 //Function to connect system to Wifi network
 void connectToWifi() {
@@ -183,4 +186,49 @@ void sendHTTPPOST(JsonObject& data) {
     }
   }
 
+}
+
+//Function that runs when ESP8266 is running - loops
+void loop() {
+  //If Serial Communication from Arduino is successful
+  if (nodemcu.available()) {
+    Serial.println("______________________________________");
+    Serial.println("Wifi Board recieving data\n");
+
+    //Setup Json buffer that will store GPS coordinates as JSON
+    StaticJsonBuffer<1000> jsonBuffer;
+    //Parse the Json object passed from Arduino (GPS coorindates)
+    JsonObject& data = jsonBuffer.parseObject(nodemcu);
+
+    //If error parsing - clear buffer and return out of iteration
+    if (data == JsonObject::invalid()) {
+      Serial.println("Invalid Json Object");
+      jsonBuffer.clear();
+      return;
+    }
+
+    //Extract the coorindates from Json Object
+    latitude = String(data["lat"]);
+    longitude = String(data["lon"]);
+    dateTime = String(data["dateTime"]);
+    cartId = int(data["cartId"]);
+
+    //Display coodinates for debugging
+    displayCoorindates(data);
+
+    if (!longitude.equals("") && !latitude.equals("")
+        && longitude != NULL && latitude != NULL)
+    {
+      //Sent HTTP POST
+      sendHTTPPOST(data);
+      Serial.println("______________________________________");
+    }
+    else
+      Serial.println("Invalid coordinates");
+  }
+  else {
+    Serial.println("Waiting for communication from GPS\n");
+    return; 
+  }
+    delay(1000);
 }

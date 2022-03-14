@@ -1,2 +1,2 @@
-# SofanaGPS-Prototype
-Prototype using Arduino for GPS tracking
+# SofanaGPS-Arduino
+System using Arduino for GPS tracking

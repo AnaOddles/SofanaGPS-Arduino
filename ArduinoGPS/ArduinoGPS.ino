@@ -87,9 +87,9 @@ void sendData()
   }
   //else
     //Serial.println(F("Waiting for GPS to grab coordinates...\n"));
+  //Wait 5ms seconds
+  delay(500);
 
-  //Wait 1 second
-  delay(1000);
 }
 
 //Function that used to grab coorindates from the GPS Module

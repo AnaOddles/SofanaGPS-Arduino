@@ -47,6 +47,7 @@ void setup() {
   connectToWifi();
 }
 
+
 //Function to connect system to Wifi network
 void connectToWifi() {
 
